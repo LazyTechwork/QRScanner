@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/header_text"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@color/white"
         android:paddingHorizontal="@dimen/horizontal_padding"
         android:paddingVertical="@dimen/vertical_padding"
@@ -38,7 +38,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navbar"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="50dp"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
