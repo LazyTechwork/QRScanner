@@ -14,6 +14,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val navbar: BottomNavigationView = findViewById(R.id.navbar)
         navbar.setOnNavigationItemSelectedListener(navbarListener)
+        supportFragmentManager.beginTransaction()
+        val fragment = HistoryFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.app_container, fragment, fragment.javaClass.simpleName)
     }
 
     private val navbarListener =
