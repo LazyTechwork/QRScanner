@@ -6,14 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".fragments.HistoryFragment">
 
-    <ru.lazytechwork.qrscanner.components.HistoryItem
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:historyName="@string/app_name"
-        app:historyData="@string/app_name"
-        app:historyDate="@string/app_name"
-        app:historyType="link"
-
+    <LinearLayout
+        android:id="@+id/historylist"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

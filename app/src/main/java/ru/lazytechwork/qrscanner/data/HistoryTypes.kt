@@ -1,4 +1,4 @@
-package ru.lazytechwork.qrscanner.components
+package ru.lazytechwork.qrscanner.data
 
 enum class HistoryTypes(name: String) {
     LINK("link"),
