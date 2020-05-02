@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HistoryItem">
+        <attr name="historyName" format="string" />
+        <attr name="historyDate" format="string" />
+        <attr name="historyData" format="string" />
+        <attr name="historyType" format="string" />
+    </declare-styleable>
+</resources>
