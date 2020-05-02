@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@color/gray_40">
+    android:background="@color/gray_40"
+    tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/header_text"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
         android:background="@color/white"
         android:paddingHorizontal="@dimen/horizontal_padding"
         android:paddingVertical="@dimen/vertical_padding"
@@ -24,7 +24,7 @@
 
     <View
         android:id="@+id/main_view"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/vertical_padding"
         android:layout_marginBottom="@dimen/vertical_padding"
@@ -42,6 +42,10 @@
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:itemIconSize="30dp"
+        app:itemIconTint="@color/navbar_colors"
+        app:labelVisibilityMode="unlabeled"
+        app:menu="@menu/navbar_bottom" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
