@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_40"
     tools:context=".MainActivity">
 
     <TextView
@@ -12,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="@color/white"
-        android:elevation="3dp"
         android:gravity="center_vertical"
         android:paddingHorizontal="@dimen/horizontal_padding"
         android:paddingVertical="@dimen/vertical_padding"
@@ -42,7 +40,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white"
-        android:elevation="3dp"
         app:itemIconSize="30dp"
         app:itemIconTint="@drawable/navbar_colors"
         app:labelVisibilityMode="unlabeled"
