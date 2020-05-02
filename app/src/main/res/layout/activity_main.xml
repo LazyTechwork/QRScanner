@@ -26,8 +26,6 @@
         android:id="@+id/app_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/vertical_padding"
-        android:layout_marginBottom="@dimen/vertical_padding"
         app:layout_constraintBottom_toTopOf="@+id/navbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

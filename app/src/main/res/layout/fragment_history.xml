@@ -6,13 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".fragments.HistoryFragment">
 
-    <LinearLayout
-        android:id="@+id/historylist"
+    <ScrollView
+        android:id="@+id/historyscroll"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/historylist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/vertical_padding" />
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
