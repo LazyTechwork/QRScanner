@@ -8,6 +8,8 @@ import ru.lazytechwork.qrscanner.fragments.FavouritesFragment
 import ru.lazytechwork.qrscanner.fragments.HistoryFragment
 
 class MainActivity : AppCompatActivity() {
+    private val historyFragment: HistoryFragment = HistoryFragment()
+    private val favouritesFragment: FavouritesFragment = FavouritesFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,22 +19,30 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
         val fragment = HistoryFragment()
         supportFragmentManager.beginTransaction()
-            .replace(R.id.app_container, fragment, fragment.javaClass.simpleName)
+            .replace(R.id.app_container, fragment, fragment.javaClass.simpleName).commit()
     }
 
     private val navbarListener =
         BottomNavigationView.OnNavigationItemSelectedListener { menuItem: MenuItem ->
             when (menuItem.itemId) {
                 R.id.navitem_history -> {
-                    val fragment = HistoryFragment()
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.app_container, fragment, fragment.javaClass.simpleName)
+                        .replace(
+                            R.id.app_container,
+                            historyFragment,
+                            historyFragment.javaClass.simpleName
+                        )
+                        .commit()
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navitem_favourites -> {
-                    val fragment = FavouritesFragment()
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.app_container, fragment, fragment.javaClass.simpleName)
+                        .replace(
+                            R.id.app_container,
+                            favouritesFragment,
+                            favouritesFragment.javaClass.simpleName
+                        )
+                        .commit()
                     return@OnNavigationItemSelectedListener true
                 }
             }
