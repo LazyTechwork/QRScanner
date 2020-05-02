@@ -44,7 +44,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:itemIconSize="30dp"
-        app:itemIconTint="@color/navbar_colors"
+        app:itemIconTint="@drawable/navbar_colors"
         app:labelVisibilityMode="unlabeled"
         app:menu="@menu/navbar_bottom" />
 
