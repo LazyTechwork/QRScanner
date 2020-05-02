@@ -2,6 +2,7 @@ package ru.lazytechwork.qrscanner
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.lazytechwork.qrscanner.fragments.FavouritesFragment
@@ -14,12 +15,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         val navbar: BottomNavigationView = findViewById(R.id.navbar)
         navbar.setOnNavigationItemSelectedListener(navbarListener)
         supportFragmentManager.beginTransaction()
-        val fragment = HistoryFragment()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.app_container, fragment, fragment.javaClass.simpleName).commit()
+            .replace(R.id.app_container, historyFragment, historyFragment.javaClass.simpleName)
+            .commit()
     }
 
     private val navbarListener =
