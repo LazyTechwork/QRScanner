@@ -1,21 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="sky_300">#71AAEB</color>
-
-<!--    Gray-->
-    <color name="gray_20">#F9F9F9</color>
-    <color name="gray_40">#F2F3F5</color>
-    <color name="gray_100">#E1E3E5</color>
-    <color name="gray_850">#232324</color>
-    <color name="gray_900">#19191A</color>
-
-<!--    Azure-->
     <color name="azure_300">#3F8AE0</color>
-    <color name="azure_A400">#4986CC</color>
-
-<!--    Base colors -->
-    <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-
-    <color name="black_blue24">#001C3D</color>
+    <color name="white">#FFFFFF</color>
+    <color name="yellow_light">#FFD54F</color>
+    <color name="gray_40">#F2F3F5</color>
 </resources>
