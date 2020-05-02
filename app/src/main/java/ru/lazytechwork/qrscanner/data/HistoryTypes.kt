@@ -1,7 +1,7 @@
 package ru.lazytechwork.qrscanner.data
 
-enum class HistoryTypes(name: String) {
-    LINK("link"),
-    TEXT("text"),
-    CONTACT("contact")
+enum class HistoryTypes {
+    LINK,
+    TEXT,
+    CONTACT
 }
