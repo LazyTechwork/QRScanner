@@ -1,12 +1,15 @@
 package ru.lazytechwork.qrscanner.components
 
 import android.content.Context
+import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import kotlinx.android.synthetic.main.history_item.view.*
 import ru.lazytechwork.qrscanner.MainActivity
 import ru.lazytechwork.qrscanner.R
 import ru.lazytechwork.qrscanner.data.HistoryTypes
+import ru.lazytechwork.qrscanner.sql.AppDatabase
 import ru.lazytechwork.qrscanner.sql.Scan
 
 
@@ -15,14 +18,21 @@ class HistoryItem : ConstraintLayout {
     private val dateView: TextView
     private val dataView: TextView
     private val typeView: ImageView
+    private val db: AppDatabase
+    private val scan: Scan
 
-    constructor(context: Context, scan: Scan) : super(context) {
+    constructor(context: Context, scan: Scan, db: AppDatabase) : super(context) {
+        this.db = db
+        this.scan = scan
+
         inflate(context, R.layout.history_item, this)
 
         typeView = findViewById(R.id.history_type)
         dateView = findViewById(R.id.history_date)
         nameView = findViewById(R.id.history_name)
         dataView = findViewById(R.id.history_data)
+
+        favourite_switch.setOnCheckedChangeListener(FavouriteSwitcher(db, scan))
 
         setHistoryType(scan.type)
         nameView.text = scan.name
@@ -48,5 +58,15 @@ class HistoryItem : ConstraintLayout {
 
     fun setDate(date: String) {
         dateView.text = date
+    }
+}
+
+class FavouriteSwitcher(private val db: AppDatabase, private val scan: Scan) :
+    CompoundButton.OnCheckedChangeListener {
+    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+        if (isChecked)
+            db.scansInterface().makeFavourite(scan)
+        else
+            db.scansInterface().removeFavourite(scan)
     }
 }

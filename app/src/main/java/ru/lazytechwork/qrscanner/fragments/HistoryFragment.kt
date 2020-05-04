@@ -24,9 +24,9 @@ class HistoryFragment : Fragment() {
         list = view!!.findViewById(R.id.historylist)
         scans = (activity as MainActivity).getScans()
         for (scan in scans)
-            list.addView(HistoryItem(view.context, scan))
+            list.addView(HistoryItem(view.context, scan, (activity as MainActivity).db))
         for (scan in scans)
-            list.addView(HistoryItem(view.context, scan))
+            list.addView(HistoryItem(view.context, scan, (activity as MainActivity).db))
         return view
     }
 

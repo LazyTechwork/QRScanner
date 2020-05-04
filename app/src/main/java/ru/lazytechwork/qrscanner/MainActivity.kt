@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private val historyFragment: HistoryFragment = HistoryFragment()
     private val favouritesFragment: FavouritesFragment = FavouritesFragment()
-    private val db =
+    val db =
         Room.databaseBuilder(applicationContext, AppDatabase::class.java, "ltw_qrscanner").build()
 
     fun getScans(): List<Scan> =
