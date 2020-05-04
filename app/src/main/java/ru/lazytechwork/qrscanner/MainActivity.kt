@@ -48,13 +48,14 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.navitem_history -> {
                     val random = Random()
+                    val types = HistoryTypes.values()
                     db.scansInterface().insertAll(
                         Scan(
                             random.nextInt(),
                             "123",
                             "123",
                             Date(),
-                            HistoryTypes.values()[random.nextInt(HistoryTypes.values().size)],
+                            types[random.nextInt(types.size)],
                             false
                         )
                     )
