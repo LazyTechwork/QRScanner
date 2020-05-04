@@ -4,14 +4,22 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
+import androidx.room.Room
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.lazytechwork.qrscanner.fragments.FavouritesFragment
 import ru.lazytechwork.qrscanner.fragments.HistoryFragment
-import java.util.logging.Logger
+import ru.lazytechwork.qrscanner.sql.AppDatabase
+import ru.lazytechwork.qrscanner.sql.Scan
 
 class MainActivity : AppCompatActivity() {
     private val historyFragment: HistoryFragment = HistoryFragment()
     private val favouritesFragment: FavouritesFragment = FavouritesFragment()
+    private val db =
+        Room.databaseBuilder(applicationContext, AppDatabase::class.java, "ltw_qrscanner").build()
+
+    fun getScans(): List<Scan> =
+        db.scansInterface().getAll()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
