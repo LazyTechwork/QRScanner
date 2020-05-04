@@ -32,6 +32,7 @@ class HistoryItem : ConstraintLayout {
         nameView = findViewById(R.id.history_name)
         dataView = findViewById(R.id.history_data)
 
+        favourite_switch.isChecked = scan.isFavourite
         favourite_switch.setOnCheckedChangeListener(FavouriteSwitcher(db, scan))
 
         setHistoryType(scan.type)
