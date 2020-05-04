@@ -10,8 +10,15 @@ import ru.lazytechwork.qrscanner.fragments.FavouritesFragment
 import ru.lazytechwork.qrscanner.fragments.HistoryFragment
 import ru.lazytechwork.qrscanner.sql.AppDatabase
 import ru.lazytechwork.qrscanner.sql.Scan
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        val DATE_FORMAT = SimpleDateFormat("dd-mm-YYYY HH:mm:ss", Locale("ru"))
+    }
+
     private val historyFragment: HistoryFragment = HistoryFragment()
     private val favouritesFragment: FavouritesFragment = FavouritesFragment()
     private val db =

@@ -4,9 +4,10 @@ import android.content.Context
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import ru.lazytechwork.qrscanner.MainActivity
 import ru.lazytechwork.qrscanner.R
 import ru.lazytechwork.qrscanner.data.HistoryTypes
-import ru.lazytechwork.qrscanner.data.ItemScan
+import ru.lazytechwork.qrscanner.sql.Scan
 
 
 class HistoryItem : ConstraintLayout {
@@ -15,7 +16,7 @@ class HistoryItem : ConstraintLayout {
     private val dataView: TextView
     private val typeView: ImageView
 
-    constructor(context: Context, scan: ItemScan) : super(context) {
+    constructor(context: Context, scan: Scan) : super(context) {
         inflate(context, R.layout.history_item, this)
 
         typeView = findViewById(R.id.history_type)
@@ -26,10 +27,10 @@ class HistoryItem : ConstraintLayout {
         setHistoryType(scan.type)
         nameView.text = scan.name
         dataView.text = scan.data
-        dateView.text = scan.date
+        dateView.text = MainActivity.DATE_FORMAT.format(scan.date)
     }
 
-    fun setHistoryType(type: HistoryTypes) = typeView.setImageResource(
+    private fun setHistoryType(type: HistoryTypes) = typeView.setImageResource(
         when (type) {
             HistoryTypes.LINK -> R.drawable.ic_link_outline
             HistoryTypes.TEXT -> R.drawable.ic_text_outline

@@ -6,34 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
+import ru.lazytechwork.qrscanner.MainActivity
 import ru.lazytechwork.qrscanner.R
 import ru.lazytechwork.qrscanner.components.HistoryItem
-import ru.lazytechwork.qrscanner.data.HistoryTypes
-import ru.lazytechwork.qrscanner.data.ItemScan
-import java.util.logging.Logger
+import ru.lazytechwork.qrscanner.sql.Scan
 
 class HistoryFragment : Fragment() {
     private lateinit var list: LinearLayout
-    private val scans = listOf<ItemScan>(
-        ItemScan(
-            "Новая ссылка",
-            "https://vk.com/ipetrovofficial",
-            "02.05.2020 13:47",
-            HistoryTypes.LINK
-        ),
-        ItemScan(
-            "Новый текст",
-            "Пример текста отсканированного при помощи QRScanner",
-            "02.05.2020 13:42",
-            HistoryTypes.TEXT
-        ),
-        ItemScan(
-            "Новый контакт",
-            "Петров Иван Владимирович <IRuPetrov@gmail.com>",
-            "02.05.2020 13:15",
-            HistoryTypes.CONTACT
-        )
-    )
+    private lateinit var scans: List<Scan>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +22,7 @@ class HistoryFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_history, container, false)
         list = view!!.findViewById(R.id.historylist)
+        scans = (activity as MainActivity).getScans()
         for (scan in scans)
             list.addView(HistoryItem(view.context, scan))
         for (scan in scans)

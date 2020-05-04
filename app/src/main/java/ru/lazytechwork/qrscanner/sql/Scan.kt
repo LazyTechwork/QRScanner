@@ -3,6 +3,7 @@ package ru.lazytechwork.qrscanner.sql
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import ru.lazytechwork.qrscanner.data.HistoryTypes
 import java.sql.Date
 
 @Entity
@@ -11,5 +12,6 @@ data class Scan(
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "data") val data: String,
     @ColumnInfo(name = "date") val date: Date,
+    @ColumnInfo(name = "type") val type: HistoryTypes,
     @ColumnInfo(name = "is_favourite") val isFavourite: Boolean
 )
