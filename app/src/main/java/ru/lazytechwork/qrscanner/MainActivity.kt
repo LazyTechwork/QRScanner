@@ -28,6 +28,9 @@ class MainActivity : AppCompatActivity() {
     fun getScans(): List<Scan> =
         db.scansInterface().getAll()
 
+    fun getFavouriteScans(): List<Scan> =
+        db.scansInterface().getFavourites()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
