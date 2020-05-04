@@ -22,8 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private val historyFragment: HistoryFragment = HistoryFragment()
     private val favouritesFragment: FavouritesFragment = FavouritesFragment()
-    val db =
-        Room.databaseBuilder(applicationContext, AppDatabase::class.java, "ltw_qrscanner").build()
+    lateinit var db: AppDatabase
 
     fun getScans(): List<Scan> =
         db.scansInterface().getAll()
@@ -35,6 +34,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "ltw_qrscanner")
+            .build()
 
         val navbar: BottomNavigationView = findViewById(R.id.navbar)
         navbar.setOnNavigationItemSelectedListener(navbarListener)
