@@ -2,11 +2,12 @@ package ru.lazytechwork.qrscanner
 
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.lazytechwork.qrscanner.fragments.FavouritesFragment
 import ru.lazytechwork.qrscanner.fragments.HistoryFragment
+import java.util.logging.Logger
 
 class MainActivity : AppCompatActivity() {
     private val historyFragment: HistoryFragment = HistoryFragment()
@@ -32,7 +33,8 @@ class MainActivity : AppCompatActivity() {
                             R.id.app_container,
                             historyFragment,
                             historyFragment.javaClass.simpleName
-                        )
+                        ).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .addToBackStack(null)
                         .commit()
                     return@OnNavigationItemSelectedListener true
                 }
@@ -42,7 +44,8 @@ class MainActivity : AppCompatActivity() {
                             R.id.app_container,
                             favouritesFragment,
                             favouritesFragment.javaClass.simpleName
-                        )
+                        ).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .addToBackStack(null)
                         .commit()
                     return@OnNavigationItemSelectedListener true
                 }

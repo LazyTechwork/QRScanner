@@ -10,6 +10,7 @@ import ru.lazytechwork.qrscanner.R
 import ru.lazytechwork.qrscanner.components.HistoryItem
 import ru.lazytechwork.qrscanner.data.HistoryTypes
 import ru.lazytechwork.qrscanner.data.ItemScan
+import java.util.logging.Logger
 
 class HistoryFragment : Fragment() {
     private lateinit var list: LinearLayout
@@ -41,12 +42,6 @@ class HistoryFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_history, container, false)
         list = view!!.findViewById(R.id.historylist)
-        for (scan in scans)
-            list.addView(HistoryItem(view.context, scan))
-        for (scan in scans)
-            list.addView(HistoryItem(view.context, scan))
-        for (scan in scans)
-            list.addView(HistoryItem(view.context, scan))
         for (scan in scans)
             list.addView(HistoryItem(view.context, scan))
         for (scan in scans)
