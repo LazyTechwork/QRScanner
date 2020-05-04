@@ -1,17 +1,18 @@
 package ru.lazytechwork.qrscanner.sql
 
+import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ru.lazytechwork.qrscanner.data.HistoryTypes
-import java.sql.Date
+import java.util.*
 
-@Entity
+@Entity(tableName = "scans")
 data class Scan(
-    @PrimaryKey val id: Int,
-    @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "data") val data: String,
-    @ColumnInfo(name = "date") val date: Date,
-    @ColumnInfo(name = "type") val type: HistoryTypes,
-    @ColumnInfo(name = "is_favourite") val isFavourite: Boolean
+    @PrimaryKey @ColumnInfo(name = "id") val id: Int,
+    @ColumnInfo(name = "name") @NonNull var name: String,
+    @ColumnInfo(name = "data") @NonNull var data: String,
+    @ColumnInfo(name = "date") @NonNull val date: Date,
+    @ColumnInfo(name = "type") @NonNull var type: HistoryTypes,
+    @ColumnInfo(name = "favourite") @NonNull var isFavourite: Boolean
 )

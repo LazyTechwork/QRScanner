@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.room.Room
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import ru.lazytechwork.qrscanner.data.HistoryTypes
 import ru.lazytechwork.qrscanner.fragments.FavouritesFragment
 import ru.lazytechwork.qrscanner.fragments.HistoryFragment
 import ru.lazytechwork.qrscanner.sql.AppDatabase
@@ -43,6 +44,17 @@ class MainActivity : AppCompatActivity() {
         BottomNavigationView.OnNavigationItemSelectedListener { menuItem: MenuItem ->
             when (menuItem.itemId) {
                 R.id.navitem_history -> {
+                    val random = Random()
+                    db.scansInterface().insertAll(
+                        Scan(
+                            random.nextInt(),
+                            "123",
+                            "123",
+                            Date(),
+                            HistoryTypes.values()[random.nextInt(HistoryTypes.values().size)],
+                            false
+                        )
+                    )
                     supportFragmentManager.beginTransaction()
                         .replace(
                             R.id.app_container,

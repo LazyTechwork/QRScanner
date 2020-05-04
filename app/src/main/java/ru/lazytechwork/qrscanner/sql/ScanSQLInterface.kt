@@ -1,9 +1,6 @@
 package ru.lazytechwork.qrscanner.sql
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface ScanSQLInterface {
@@ -13,8 +10,23 @@ interface ScanSQLInterface {
     @Query("SELECT * FROM scans WHERE id IN (:ids)")
     fun loadAllByIds(ids: IntArray): List<Scan>
 
-    @Query("SELECT * FROM scans WHERE is_favourite = true")
+    @Query("SELECT * FROM scans WHERE favourite = 1")
     fun getFavourites(): List<Scan>
+
+    @Update
+    fun update(scan: Scan)
+
+    @Transaction
+    fun makeFavourite(scan: Scan) {
+        scan.isFavourite = true
+        update(scan)
+    }
+
+    @Transaction
+    fun removeFavourite(scan: Scan) {
+        scan.isFavourite = false
+        update(scan)
+    }
 
     @Insert
     fun insertAll(vararg scans: Scan)
