@@ -20,7 +20,6 @@
             android:id="@+id/historylist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingVertical="@dimen/vertical_padding" />
+            android:orientation="vertical" />
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
