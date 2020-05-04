@@ -17,7 +17,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        val DATE_FORMAT = SimpleDateFormat("dd-mm-YYYY HH:mm:ss", Locale("ru"))
+        val DATE_FORMAT = SimpleDateFormat("dd.mm.yyyy HH:mm:ss", Locale("ru"))
     }
 
     private val historyFragment: HistoryFragment = HistoryFragment()
