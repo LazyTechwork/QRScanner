@@ -24,10 +24,10 @@ class MainActivity : AppCompatActivity() {
     private val favouritesFragment: FavouritesFragment = FavouritesFragment()
     lateinit var db: AppDatabase
 
-    fun getScans(): List<Scan> =
+    suspend fun getScans(): List<Scan> =
         db.scansInterface().getAll()
 
-    fun getFavouriteScans(): List<Scan> =
+    suspend fun getFavouriteScans(): List<Scan> =
         db.scansInterface().getFavourites()
 
 

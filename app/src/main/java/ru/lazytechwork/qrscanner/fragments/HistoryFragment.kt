@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import ru.lazytechwork.qrscanner.MainActivity
 import ru.lazytechwork.qrscanner.R
 import ru.lazytechwork.qrscanner.components.HistoryItem
@@ -14,6 +17,14 @@ import ru.lazytechwork.qrscanner.sql.Scan
 class HistoryFragment : Fragment() {
     private lateinit var list: LinearLayout
     private lateinit var scans: List<Scan>
+    private val uiScope = CoroutineScope(Dispatchers.Main)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        uiScope.launch {
+            scans = (activity as MainActivity).getScans()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,8 +32,7 @@ class HistoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_history, container, false)
-        list = view!!.findViewById(R.id.historylist)
-        scans = (activity as MainActivity).getScans()
+        list = requireView().findViewById(R.id.historylist)
         for (scan in scans)
             list.addView(HistoryItem(view.context, scan, (activity as MainActivity).db))
         return view
