@@ -14,7 +14,7 @@ class ScanHistoryAdapter(private var dataset: List<Scan>, private val db: AppDat
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder =
-        ViewHolder(HistoryItem(parent.context, parent, db))
+        ViewHolder(HistoryItem(parent, db))
 
 
     fun updateDataset(scans: List<Scan>) {

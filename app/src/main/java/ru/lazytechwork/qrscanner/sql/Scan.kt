@@ -15,4 +15,6 @@ data class Scan(
     @ColumnInfo(name = "date") @NonNull val date: Date,
     @ColumnInfo(name = "type") @NonNull var type: HistoryType,
     @ColumnInfo(name = "favourite") @NonNull var isFavourite: Boolean
-)
+) {
+    override fun toString() = "Scan [ID: $id]: $name / $data (Type: $type)"
+}

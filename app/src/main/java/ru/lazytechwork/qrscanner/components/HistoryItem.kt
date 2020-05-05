@@ -1,6 +1,5 @@
 package ru.lazytechwork.qrscanner.components
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,6 @@ import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import kotlinx.android.synthetic.main.history_item.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,32 +16,27 @@ import ru.lazytechwork.qrscanner.R
 import ru.lazytechwork.qrscanner.data.HistoryType
 import ru.lazytechwork.qrscanner.sql.AppDatabase
 import ru.lazytechwork.qrscanner.sql.Scan
+import java.util.logging.Logger
 
 
 class HistoryItem(
-    private val itemContext: Context,
     private val parent: ViewGroup,
     private val db: AppDatabase
 ) :
-    ConstraintLayout(itemContext) {
-    private val nameView: TextView
-    private val dateView: TextView
-    private val dataView: TextView
-    private val typeView: ImageView
-    private val favouriteSwitch: CheckBox
-    private lateinit var scan: Scan
+    ConstraintLayout(parent.context) {
+    private val layoutInflater: LayoutInflater = LayoutInflater.from(parent.context)
     private val view: View =
-        LayoutInflater.from(itemContext).inflate(R.layout.history_item, parent, false)
+        layoutInflater.inflate(R.layout.history_item, parent, false)
+    private val nameView: TextView = view.findViewById<TextView>(R.id.history_name)
+    private val dateView: TextView = view.findViewById<TextView>(R.id.history_date)
+    private val dataView: TextView = view.findViewById<TextView>(R.id.history_data)
+    private val typeView: ImageView = view.findViewById<ImageView>(R.id.history_type)
+    private val favouriteSwitch: CheckBox = view.findViewById<CheckBox>(R.id.favourite_switch)
+    private lateinit var scan: Scan
 
     init {
-        typeView = view.history_type
-        dateView = view.history_date
-        nameView = view.history_name
-        dataView = view.history_data
-        favouriteSwitch = view.favourite_switch
         favouriteSwitch.setOnCheckedChangeListener(FavouriteSwitcher(db, this))
     }
-
 
     fun setScan(scan: Scan) {
         this.scan = scan
@@ -52,6 +45,7 @@ class HistoryItem(
         this.setName(scan.name)
         this.setData(scan.data)
         this.setDate(MainActivity.DATE_FORMAT.format(scan.date))
+        Logger.getLogger("HistoryItem").info(scan.toString())
     }
 
     fun getScan(): Scan = this.scan

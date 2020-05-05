@@ -8,8 +8,6 @@ import androidx.room.Room
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import ru.lazytechwork.qrscanner.data.HistoryType
 import ru.lazytechwork.qrscanner.fragments.FavouritesFragment
 import ru.lazytechwork.qrscanner.fragments.HistoryFragment
 import ru.lazytechwork.qrscanner.sql.AppDatabase
@@ -52,28 +50,28 @@ class MainActivity : AppCompatActivity() {
         BottomNavigationView.OnNavigationItemSelectedListener { menuItem: MenuItem ->
             when (menuItem.itemId) {
                 R.id.navitem_history -> {
-                    val random = Random()
-                    val types = HistoryType.values()
-                    ioScope.launch {
-                        db.scansInterface().insertAll(
-                            Scan(
-                                random.nextInt(),
-                                "123",
-                                "123",
-                                Date(),
-                                types[random.nextInt(types.size)],
-                                false
-                            )
-                        )
-                        supportFragmentManager.beginTransaction()
-                            .replace(
-                                R.id.app_container,
-                                historyFragment,
-                                historyFragment.javaClass.simpleName
-                            ).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                            .addToBackStack(null)
-                            .commit()
-                    }
+//                    val random = Random()
+//                    val types = HistoryType.values()
+//                    ioScope.launch {
+//                        db.scansInterface().insertAll(
+//                            Scan(
+//                                random.nextInt(),
+//                                "123",
+//                                "123",
+//                                Date(),
+//                                types[random.nextInt(types.size)],
+//                                false
+//                            )
+//                        )
+                    supportFragmentManager.beginTransaction()
+                        .replace(
+                            R.id.app_container,
+                            historyFragment,
+                            historyFragment.javaClass.simpleName
+                        ).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .addToBackStack(null)
+                        .commit()
+//                    }
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navitem_favourites -> {
