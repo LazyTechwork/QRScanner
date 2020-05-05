@@ -13,8 +13,8 @@ class ScanHistoryAdapter(private var dataset: List<Scan>, private val db: AppDat
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ScanHistoryAdapter.ViewHolder =
-        ViewHolder(HistoryItem(parent.context, db))
+    ): ViewHolder =
+        ViewHolder(HistoryItem(parent.context, parent, db))
 
 
     fun updateDataset(scans: List<Scan>) {

@@ -1,6 +1,10 @@
 package ru.lazytechwork.qrscanner.components
 
 import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -16,26 +20,30 @@ import ru.lazytechwork.qrscanner.sql.AppDatabase
 import ru.lazytechwork.qrscanner.sql.Scan
 
 
-class HistoryItem : ConstraintLayout {
+class HistoryItem(
+    private val itemContext: Context,
+    private val parent: ViewGroup,
+    private val db: AppDatabase
+) :
+    ConstraintLayout(itemContext) {
     private val nameView: TextView
     private val dateView: TextView
     private val dataView: TextView
     private val typeView: ImageView
-    private val db: AppDatabase
+    private val favouriteSwitch: CheckBox
     private lateinit var scan: Scan
+    private val view: View =
+        LayoutInflater.from(itemContext).inflate(R.layout.history_item, parent, false)
 
-    constructor(context: Context?, db: AppDatabase) : super(context) {
-        this.db = db
-
-        inflate(context, R.layout.history_item, this)
-
-        typeView = findViewById(R.id.history_type)
-        dateView = findViewById(R.id.history_date)
-        nameView = findViewById(R.id.history_name)
-        dataView = findViewById(R.id.history_data)
-
-        favourite_switch.setOnCheckedChangeListener(FavouriteSwitcher(db, this))
+    init {
+        typeView = view.history_type
+        dateView = view.history_date
+        nameView = view.history_name
+        dataView = view.history_data
+        favouriteSwitch = view.favourite_switch
+        favouriteSwitch.setOnCheckedChangeListener(FavouriteSwitcher(db, this))
     }
+
 
     fun setScan(scan: Scan) {
         this.scan = scan
@@ -48,7 +56,7 @@ class HistoryItem : ConstraintLayout {
 
     fun getScan(): Scan = this.scan
 
-    fun setHistoryType(type: HistoryType) = typeView.setImageResource(
+    private fun setHistoryType(type: HistoryType) = typeView.setImageResource(
         when (type) {
             HistoryType.LINK -> R.drawable.ic_link_outline
             HistoryType.TEXT -> R.drawable.ic_text_outline
@@ -56,20 +64,20 @@ class HistoryItem : ConstraintLayout {
         }
     )
 
-    fun setName(name: String) {
+    private fun setName(name: String) {
         nameView.text = name
     }
 
-    fun setData(data: String) {
+    private fun setData(data: String) {
         dataView.text = data
     }
 
-    fun setDate(date: String) {
+    private fun setDate(date: String) {
         dateView.text = date
     }
 
-    fun setFavouriteSwitch(switch: Boolean) {
-        favourite_switch.isChecked = switch
+    private fun setFavouriteSwitch(switch: Boolean) {
+        favouriteSwitch.isChecked = switch
     }
 }
 
