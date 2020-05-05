@@ -9,7 +9,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ru.lazytechwork.qrscanner.data.HistoryTypes
+import ru.lazytechwork.qrscanner.data.HistoryType
 import ru.lazytechwork.qrscanner.fragments.FavouritesFragment
 import ru.lazytechwork.qrscanner.fragments.HistoryFragment
 import ru.lazytechwork.qrscanner.sql.AppDatabase
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.navitem_history -> {
                     val random = Random()
-                    val types = HistoryTypes.values()
+                    val types = HistoryType.values()
                     ioScope.launch {
                         db.scansInterface().insertAll(
                             Scan(

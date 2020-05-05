@@ -4,21 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.lazytechwork.qrscanner.MainActivity
 import ru.lazytechwork.qrscanner.R
-import ru.lazytechwork.qrscanner.components.HistoryItem
+import ru.lazytechwork.qrscanner.data.adapters.ScanHistoryAdapter
 import ru.lazytechwork.qrscanner.sql.Scan
 
 class HistoryFragment : Fragment() {
-    private lateinit var list: LinearLayout
-    private lateinit var scans: List<Scan>
+    private var scans: List<Scan> = emptyList()
     private val ioScope = CoroutineScope(Dispatchers.IO)
-    private val uiScope = CoroutineScope(Dispatchers.Main)
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: ScanHistoryAdapter
+    private lateinit var viewManager: RecyclerView.LayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,14 +28,18 @@ class HistoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_history, container, false)
-        list = view.findViewById(R.id.historylist)
+
+        viewManager = LinearLayoutManager(this.context)
+        viewAdapter = ScanHistoryAdapter(scans, (activity as MainActivity).db)
+        recyclerView = view.findViewById<RecyclerView>(R.id.scanlist).apply {
+            setHasFixedSize(true)
+            layoutManager = viewManager
+            adapter = viewAdapter
+        }
 
         ioScope.launch {
             scans = (activity as MainActivity).getScans()
-            uiScope.launch {
-                for (scan in scans)
-                    list.addView(HistoryItem(view.context, scan, (activity as MainActivity).db))
-            }
+            viewAdapter.updateDataset(scans)
         }
         return view
     }
