@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +19,6 @@ class FavouritesFragment : Fragment() {
     private val ioScope = CoroutineScope(Dispatchers.IO)
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: ScanHistoryAdapter
-    private lateinit var viewManager: RecyclerView.LayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,11 +26,9 @@ class FavouritesFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_history, container, false)
 
-        viewManager = LinearLayoutManager(this.context)
         viewAdapter = ScanHistoryAdapter(scans, (activity as MainActivity).db)
         recyclerView = view.findViewById<RecyclerView>(R.id.scanlist).apply {
             setHasFixedSize(true)
-            layoutManager = viewManager
             adapter = viewAdapter
         }
 

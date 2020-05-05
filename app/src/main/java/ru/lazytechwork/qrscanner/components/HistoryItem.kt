@@ -24,7 +24,7 @@ class HistoryItem : ConstraintLayout {
     private val db: AppDatabase
     private lateinit var scan: Scan
 
-    constructor(context: Context, db: AppDatabase) : super(context) {
+    constructor(context: Context?, db: AppDatabase) : super(context) {
         this.db = db
 
         inflate(context, R.layout.history_item, this)
