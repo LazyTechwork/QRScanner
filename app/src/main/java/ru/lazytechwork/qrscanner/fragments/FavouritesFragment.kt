@@ -23,7 +23,7 @@ class FavouritesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_history, container, false)
+        val view = inflater.inflate(R.layout.fragment_favourites, container, false)
         list = view.findViewById(R.id.favouriteslist)
         uiScope.launch {
             scans = (activity as MainActivity).getFavouriteScans()
