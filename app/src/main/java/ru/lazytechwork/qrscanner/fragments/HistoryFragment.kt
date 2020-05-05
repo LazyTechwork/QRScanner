@@ -34,9 +34,8 @@ class HistoryFragment : Fragment() {
 
         viewAdapter = ScanHistoryAdapter(scans, (activity as MainActivity).db)
         recyclerView = view.findViewById<RecyclerView>(R.id.scanlist).apply {
-//            setHasFixedSize(true)
+            setHasFixedSize(true)
             adapter = viewAdapter
-            layoutManager = LinearLayoutManager(context)
         }
 
         ioScope.launch {
