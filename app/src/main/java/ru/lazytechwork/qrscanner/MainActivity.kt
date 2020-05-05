@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.room.Room
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import ru.lazytechwork.qrscanner.data.HistoryTypes
 import ru.lazytechwork.qrscanner.fragments.FavouritesFragment
 import ru.lazytechwork.qrscanner.fragments.HistoryFragment
@@ -23,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private val historyFragment: HistoryFragment = HistoryFragment()
     private val favouritesFragment: FavouritesFragment = FavouritesFragment()
     lateinit var db: AppDatabase
+    private val ioScope = CoroutineScope(Dispatchers.IO)
 
     suspend fun getScans(): List<Scan> =
         db.scansInterface().getAll()
@@ -50,24 +54,26 @@ class MainActivity : AppCompatActivity() {
                 R.id.navitem_history -> {
                     val random = Random()
                     val types = HistoryTypes.values()
-                    db.scansInterface().insertAll(
-                        Scan(
-                            random.nextInt(),
-                            "123",
-                            "123",
-                            Date(),
-                            types[random.nextInt(types.size)],
-                            false
+                    ioScope.launch {
+                        db.scansInterface().insertAll(
+                            Scan(
+                                random.nextInt(),
+                                "123",
+                                "123",
+                                Date(),
+                                types[random.nextInt(types.size)],
+                                false
+                            )
                         )
-                    )
-                    supportFragmentManager.beginTransaction()
-                        .replace(
-                            R.id.app_container,
-                            historyFragment,
-                            historyFragment.javaClass.simpleName
-                        ).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .addToBackStack(null)
-                        .commit()
+                        supportFragmentManager.beginTransaction()
+                            .replace(
+                                R.id.app_container,
+                                historyFragment,
+                                historyFragment.javaClass.simpleName
+                            ).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                            .addToBackStack(null)
+                            .commit()
+                    }
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navitem_favourites -> {
