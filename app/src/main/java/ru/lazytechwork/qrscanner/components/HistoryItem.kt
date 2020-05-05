@@ -6,6 +6,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import kotlinx.android.synthetic.main.history_item.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import ru.lazytechwork.qrscanner.MainActivity
 import ru.lazytechwork.qrscanner.R
 import ru.lazytechwork.qrscanner.data.HistoryTypes
@@ -64,10 +67,13 @@ class HistoryItem : ConstraintLayout {
 
 class FavouriteSwitcher(private val db: AppDatabase, private val scan: Scan) :
     CompoundButton.OnCheckedChangeListener {
+    private val ioScope = CoroutineScope(Dispatchers.IO)
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        if (isChecked)
-            db.scansInterface().makeFavourite(scan)
-        else
-            db.scansInterface().removeFavourite(scan)
+        ioScope.launch {
+            if (isChecked)
+                db.scansInterface().makeFavourite(scan)
+            else
+                db.scansInterface().removeFavourite(scan)
+        }
     }
 }
