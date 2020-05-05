@@ -17,23 +17,19 @@ import ru.lazytechwork.qrscanner.sql.Scan
 class FavouritesFragment : Fragment() {
     private lateinit var list: LinearLayout
     private lateinit var scans: List<Scan>
-    private val uiScope = CoroutineScope(Dispatchers.Main)
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        uiScope.launch {
-            scans = (activity as MainActivity).getFavouriteScans()
-        }
-    }
+    private val uiScope = CoroutineScope(Dispatchers.IO)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_history, container, false)
-        list = requireView().findViewById(R.id.favouriteslist)
-        for (scan in scans)
-            list.addView(HistoryItem(view.context, scan, (activity as MainActivity).db))
+        list = view.findViewById(R.id.favouriteslist)
+        uiScope.launch {
+            scans = (activity as MainActivity).getFavouriteScans()
+            for (scan in scans)
+                list.addView(HistoryItem(view.context, scan, (activity as MainActivity).db))
+        }
         return view
     }
 
