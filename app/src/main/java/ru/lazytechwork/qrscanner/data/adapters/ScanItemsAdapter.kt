@@ -1,9 +1,12 @@
 package ru.lazytechwork.qrscanner.data.adapters
 
+import android.content.Context
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_scan.view.*
 import kotlinx.coroutines.CoroutineScope
@@ -62,14 +65,31 @@ class ScanItemsAdapter(val db: AppDatabase) :
         }
     }
 
-    inner class FavouriteSwitcher(private val db: AppDatabase, private val scan: Scan) :
+    inner class FavouriteSwitcher(
+        private val db: AppDatabase,
+        private val scan: Scan
+    ) :
         CompoundButton.OnCheckedChangeListener {
         private val ioScope = CoroutineScope(Dispatchers.IO)
+        private val uiScope = CoroutineScope(Dispatchers.Main)
+
         override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
             ioScope.launch {
-                if (isChecked)
+                if (isChecked) {
                     db.scansInterface().makeFavourite(scan)
-                else
+                    uiScope.launch {
+                        val context: Context = buttonView!!.context.applicationContext
+                        with(Toast(context)) {
+                            setGravity(Gravity.CENTER_HORIZONTAL or Gravity.BOTTOM, 0, 50)
+                            view = LayoutInflater.from(context).inflate(
+                                R.layout.toast_favouriteadded,
+                                buttonView.findViewById(R.id.toast_favouriteadded_container)
+                            )
+                            duration = Toast.LENGTH_SHORT
+                            show()
+                        }
+                    }
+                } else
                     db.scansInterface().removeFavourite(scan)
             }
         }
