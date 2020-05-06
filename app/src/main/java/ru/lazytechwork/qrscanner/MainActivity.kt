@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         val navbar: BottomNavigationView = findViewById(R.id.navbar)
         navbar.setOnNavigationItemSelectedListener(navbarListener)
         supportFragmentManager.beginTransaction()
-            .replace(R.id.app_container, historyFragment, historyFragment.javaClass.simpleName)
+            .replace(R.id.app_container, historyFragment)
             .commit()
     }
 
@@ -69,8 +69,7 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(
                             R.id.app_container,
-                            historyFragment,
-                            historyFragment.javaClass.simpleName
+                            historyFragment
                         ).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .commit()
 //                    }
@@ -80,8 +79,7 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(
                             R.id.app_container,
-                            favouritesFragment,
-                            favouritesFragment.javaClass.simpleName
+                            favouritesFragment
                         ).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .commit()
                     return@OnNavigationItemSelectedListener true

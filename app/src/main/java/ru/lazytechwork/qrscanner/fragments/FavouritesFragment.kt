@@ -28,6 +28,7 @@ class FavouritesFragment : Fragment() {
         scanAdapter = ScanItemsAdapter((activity as MainActivity).db)
         recyclerView = view.findViewById<RecyclerView>(R.id.scanlist).apply {
             setHasFixedSize(true)
+            setItemViewCacheSize(20)
             adapter = scanAdapter
         }
 
