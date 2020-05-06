@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.history_item.view.*
+import kotlinx.android.synthetic.main.item_scan.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,7 +25,7 @@ class ScanItemsAdapter(val db: AppDatabase) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ScanViewHolder(
         LayoutInflater.from(parent.context).inflate(
-            R.layout.history_item,
+            R.layout.item_scan,
             parent,
             false
         )

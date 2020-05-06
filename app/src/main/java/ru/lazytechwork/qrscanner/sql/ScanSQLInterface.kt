@@ -4,13 +4,13 @@ import androidx.room.*
 
 @Dao
 interface ScanSQLInterface {
-    @Query("SELECT * FROM scans")
+    @Query("SELECT * FROM scans ORDER BY date DESC")
     fun getAll(): List<Scan>
 
-    @Query("SELECT * FROM scans WHERE id IN (:ids)")
+    @Query("SELECT * FROM scans WHERE id IN (:ids) ORDER BY date DESC")
     fun loadAllByIds(ids: IntArray): List<Scan>
 
-    @Query("SELECT * FROM scans WHERE favourite = 1")
+    @Query("SELECT * FROM scans WHERE favourite = 1 ORDER BY date DESC")
     fun getFavourites(): List<Scan>
 
     @Update
