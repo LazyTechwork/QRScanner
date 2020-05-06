@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.room.Room
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import ru.lazytechwork.qrscanner.fragments.FavouritesFragment
 import ru.lazytechwork.qrscanner.fragments.HistoryFragment
 import ru.lazytechwork.qrscanner.sql.AppDatabase
@@ -24,7 +22,6 @@ class MainActivity : AppCompatActivity() {
     private val historyFragment: HistoryFragment = HistoryFragment()
     private val favouritesFragment: FavouritesFragment = FavouritesFragment()
     lateinit var db: AppDatabase
-    private val ioScope = CoroutineScope(Dispatchers.IO)
 
     suspend fun getScans(): List<Scan> =
         db.scansInterface().getAll()
@@ -44,6 +41,12 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.app_container, historyFragment, historyFragment.javaClass.simpleName)
             .commit()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (db.isOpen)
+            db.close()
     }
 
     private val navbarListener =
@@ -69,7 +72,6 @@ class MainActivity : AppCompatActivity() {
                             historyFragment,
                             historyFragment.javaClass.simpleName
                         ).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .addToBackStack(null)
                         .commit()
 //                    }
                     return@OnNavigationItemSelectedListener true
@@ -81,7 +83,6 @@ class MainActivity : AppCompatActivity() {
                             favouritesFragment,
                             favouritesFragment.javaClass.simpleName
                         ).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .addToBackStack(null)
                         .commit()
                     return@OnNavigationItemSelectedListener true
                 }
