@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.navitem_history -> {
 //                    val random = Random()
-//                    val types = HistoryType.values()
+//                    val types = ScanType.values()
 //                    ioScope.launch {
 //                        db.scansInterface().insertAll(
 //                            Scan(

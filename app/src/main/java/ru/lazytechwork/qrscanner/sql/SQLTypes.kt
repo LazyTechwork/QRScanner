@@ -1,7 +1,7 @@
 package ru.lazytechwork.qrscanner.sql
 
 import androidx.room.TypeConverter
-import ru.lazytechwork.qrscanner.data.HistoryType
+import ru.lazytechwork.qrscanner.data.ScanType
 import java.util.*
 
 class SQLTypes {
@@ -13,8 +13,8 @@ class SQLTypes {
 
 
     @TypeConverter
-    fun historyTypeToInt(type: HistoryType): Int = type.ordinal
+    fun historyTypeToInt(type: ScanType): Int = type.ordinal
 
     @TypeConverter
-    fun intToHistoryType(typeOrdinal: Int): HistoryType = HistoryType.values()[typeOrdinal]
+    fun intToHistoryType(typeOrdinal: Int): ScanType = ScanType.values()[typeOrdinal]
 }

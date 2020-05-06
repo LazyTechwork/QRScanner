@@ -11,30 +11,28 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.lazytechwork.qrscanner.MainActivity
 import ru.lazytechwork.qrscanner.R
-import ru.lazytechwork.qrscanner.data.adapters.ScanHistoryAdapter
-import ru.lazytechwork.qrscanner.sql.Scan
+import ru.lazytechwork.qrscanner.data.adapters.ScanItemsAdapter
 
 class FavouritesFragment : Fragment() {
-    private var scans: List<Scan> = emptyList()
     private val ioScope = CoroutineScope(Dispatchers.IO)
     private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: ScanHistoryAdapter
+    private lateinit var scanAdapter: ScanItemsAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_history, container, false)
 
-        viewAdapter = ScanHistoryAdapter(scans, (activity as MainActivity).db)
+        scanAdapter = ScanItemsAdapter((activity as MainActivity).db)
         recyclerView = view.findViewById<RecyclerView>(R.id.scanlist).apply {
             setHasFixedSize(true)
-            adapter = viewAdapter
+            adapter = scanAdapter
         }
 
         ioScope.launch {
-            scans = (activity as MainActivity).getFavouriteScans()
-            viewAdapter.updateDataset(scans)
+            scanAdapter.items = (activity as MainActivity).getFavouriteScans()
         }
         return view
     }
