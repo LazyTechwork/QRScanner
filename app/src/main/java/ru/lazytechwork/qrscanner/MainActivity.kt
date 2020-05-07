@@ -25,8 +25,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        CacheMaster.initializeCache(applicationContext)
-
         val navbar: BottomNavigationView = findViewById(R.id.navbar)
         navbar.setOnNavigationItemSelectedListener(navbarListener)
         supportFragmentManager.beginTransaction()
@@ -34,10 +32,9 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onPause() {
+        super.onPause()
         CacheMaster.syncCache()
-        CacheMaster.destroyCache()
     }
 
     private val navbarListener =
