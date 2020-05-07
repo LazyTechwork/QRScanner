@@ -88,6 +88,7 @@ object CacheMaster {
             type = scan.type
         }
         else modifiedScans.add(scan)
+        scans.sortBy { -it.date.time }
         return scans
     }
 
