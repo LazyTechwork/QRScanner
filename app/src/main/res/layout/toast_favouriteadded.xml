@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/horizontal_padding"
+    android:layout_marginBottom="60dp"
     android:background="@drawable/rounded_toast"
     android:paddingHorizontal="@dimen/horizontal_padding"
     android:paddingVertical="@dimen/vertical_padding">

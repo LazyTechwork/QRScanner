@@ -80,7 +80,7 @@ class ScanItemsAdapter(val db: AppDatabase) :
                     uiScope.launch {
                         val context: Context = buttonView!!.context.applicationContext
                         with(Toast(context)) {
-                            setGravity(Gravity.CENTER_HORIZONTAL or Gravity.BOTTOM, 0, 50)
+                            setGravity(Gravity.CENTER_HORIZONTAL or Gravity.BOTTOM, 0, 0)
                             view = LayoutInflater.from(context).inflate(
                                 R.layout.toast_favouriteadded,
                                 buttonView.findViewById(R.id.toast_favouriteadded_container)
