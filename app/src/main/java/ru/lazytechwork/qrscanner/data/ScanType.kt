@@ -3,5 +3,7 @@ package ru.lazytechwork.qrscanner.data
 enum class ScanType {
     LINK,
     TEXT,
-    CONTACT
+    CONTACT,
+    GEOLOCATION,
+    WIFI
 }

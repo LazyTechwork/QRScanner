@@ -63,6 +63,8 @@ class ScanItemsAdapter : RecyclerView.Adapter<ScanItemsAdapter.ScanViewHolder> {
                         ScanType.LINK -> R.drawable.ic_link_outline
                         ScanType.TEXT -> R.drawable.ic_text_outline
                         ScanType.CONTACT -> R.drawable.ic_contact_outline
+                        ScanType.GEOLOCATION -> R.drawable.ic_geolocation_outline
+                        ScanType.WIFI -> R.drawable.ic_wifi_outline
                     }
                 )
 
