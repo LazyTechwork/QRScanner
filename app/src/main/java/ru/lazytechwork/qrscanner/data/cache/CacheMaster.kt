@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.lazytechwork.qrscanner.sql.AppDatabase
 import ru.lazytechwork.qrscanner.sql.Scan
+import java.util.logging.Logger
 
 object CacheMaster {
     private val scans: ArrayList<Scan> = ArrayList()
@@ -20,6 +21,7 @@ object CacheMaster {
     private val cacheHandler: Handler
     private const val cacheInterval: Long = 60_000L
     private lateinit var db: AppDatabase
+    private val logger: Logger = Logger.getLogger("Cache Master")
 
     init {
         cacheThread.start()
@@ -94,11 +96,17 @@ object CacheMaster {
                 db.scansInterface().insertAll(*newScans.toTypedArray())
                 newScans.clear()
             }
+
+            logger.info("Successfully synchronized with database")
         }
     }
 
     fun destroyCache() {
-        if (db.isOpen)
+        if (db.isOpen) {
+            syncCache()
+            cacheThread.quit()
+            logger.info("Closing access to database")
             db.close()
+        }
     }
 }
