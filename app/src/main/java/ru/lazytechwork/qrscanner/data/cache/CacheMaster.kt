@@ -1,6 +1,8 @@
 package ru.lazytechwork.qrscanner.data.cache
 
 import android.content.Context
+import android.os.Handler
+import android.os.HandlerThread
 import androidx.room.Room
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +16,15 @@ object CacheMaster {
     private val favouriteScans: ArrayList<Scan> = ArrayList()
     private val newScans: ArrayList<Scan> = ArrayList()
     private val ioScope = CoroutineScope(Dispatchers.IO)
+    private val cacheThread: HandlerThread = HandlerThread("Cache Master")
+    private val cacheHandler: Handler
+    private const val cacheInterval: Long = 60_000L
     private lateinit var db: AppDatabase
+
+    init {
+        cacheThread.start()
+        cacheHandler = Handler(cacheThread.looper)
+    }
 
     fun initializeCache(applicationContext: Context) {
         ioScope.launch {
@@ -24,6 +34,12 @@ object CacheMaster {
             for (scan in scans)
                 if (scan.isFavourite) favouriteScans.add(scan)
         }
+        cacheHandler.postDelayed(object : Runnable {
+            override fun run() {
+                syncCache()
+                cacheHandler.postDelayed(this, cacheInterval)
+            }
+        }, cacheInterval)
     }
 
     fun makeFavourite(i: Int): ArrayList<Scan> {
