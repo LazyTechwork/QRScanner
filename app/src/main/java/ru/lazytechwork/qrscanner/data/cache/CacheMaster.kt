@@ -52,37 +52,42 @@ object CacheMaster {
     }
 
     fun makeFavourite(i: Int): ArrayList<Scan> {
-        val scan = scans[i]
+        val scan = getScan(i)
         scan.isFavourite = true
         favouriteScans.add(scan)
-        saveScan(i, scan)
+        saveScan(scan)
         return scans
     }
 
     fun removeFavourite(i: Int): ArrayList<Scan> {
-        val scan = scans[i]
+        val scan = getScan(i)
         scan.isFavourite = false
         favouriteScans.remove(scan)
-        saveScan(i, scan)
+        saveScan(scan)
         return scans
     }
 
     fun changeName(i: Int, name: String): ArrayList<Scan> {
-        val scan = scans[i]
+        val scan = getScan(i)
         scan.name = name
-        saveScan(i, scan)
+        saveScan(scan)
         return scans
     }
 
-    fun getScan(i: Int) = scans[i]
+    private fun getScan(i: Int): Scan = scans.find { it.id == i }!!
     fun getScans() = scans
     fun getFavouriteScans() = favouriteScans
 
     fun isDirty() = modifiedScans.size > 0 || newScans.size > 0
 
-    fun saveScan(i: Int, scan: Scan): ArrayList<Scan> {
-        scans[i] = scan
-        modifiedScans.add(scan)
+    private fun saveScan(scan: Scan): ArrayList<Scan> {
+        val mScan: Scan? = modifiedScans.find { it.id == scan.id }
+        if (mScan != null) mScan.apply {
+            name = scan.name
+            data = scan.data
+            type = scan.type
+        }
+        else modifiedScans.add(scan)
         return scans
     }
 

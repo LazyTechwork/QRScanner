@@ -13,7 +13,7 @@ import ru.lazytechwork.qrscanner.data.cache.CacheMaster
 import ru.lazytechwork.qrscanner.sql.Scan
 
 class ScanItemsAdapter : RecyclerView.Adapter<ScanItemsAdapter.ScanViewHolder> {
-    var items: ArrayList<Scan> = ArrayList()
+    var items: ArrayList<Scan>
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -57,7 +57,7 @@ class ScanItemsAdapter : RecyclerView.Adapter<ScanItemsAdapter.ScanViewHolder> {
 
                 favourite_switch.apply {
                     isChecked = scan.isFavourite
-                    setOnCheckedChangeListener(FavouriteSwitcher(itemPosition))
+                    setOnCheckedChangeListener(FavouriteSwitcher(scan.id))
                 }
             }
         }
