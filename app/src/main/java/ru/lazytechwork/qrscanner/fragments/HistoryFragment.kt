@@ -21,7 +21,7 @@ class HistoryFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_history, container, false)
 
-        scanAdapter = ScanItemsAdapter(CacheMaster.getScans())
+        scanAdapter = ScanItemsAdapter() { CacheMaster.getScans() }
         recyclerView = view.findViewById<RecyclerView>(R.id.scanlist).apply {
             setHasFixedSize(true)
             setItemViewCacheSize(20)

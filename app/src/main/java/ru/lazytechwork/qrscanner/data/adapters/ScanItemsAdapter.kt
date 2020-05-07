@@ -19,8 +19,17 @@ class ScanItemsAdapter : RecyclerView.Adapter<ScanItemsAdapter.ScanViewHolder> {
             notifyDataSetChanged()
         }
 
-    constructor(items: ArrayList<Scan>) {
-        this.items = items
+    private val getFreshData: () -> ArrayList<Scan>
+    private lateinit var recyclerView: RecyclerView
+
+    constructor(freshDataFunction: () -> ArrayList<Scan>) {
+        this.getFreshData = freshDataFunction
+        this.items = getFreshData()
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        this.recyclerView = recyclerView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ScanViewHolder(
@@ -31,8 +40,10 @@ class ScanItemsAdapter : RecyclerView.Adapter<ScanItemsAdapter.ScanViewHolder> {
         )
     )
 
-    override fun onBindViewHolder(holder: ScanViewHolder, position: Int) =
+    override fun onBindViewHolder(holder: ScanViewHolder, position: Int) {
         holder.bind(position)
+
+    }
 
     override fun getItemCount(): Int {
         return items.size
@@ -69,6 +80,9 @@ class ScanItemsAdapter : RecyclerView.Adapter<ScanItemsAdapter.ScanViewHolder> {
                 CacheMaster.makeFavourite(i)
             else
                 CacheMaster.removeFavourite(i)
+            recyclerView.post {
+                items = getFreshData()
+            }
         }
     }
 }
