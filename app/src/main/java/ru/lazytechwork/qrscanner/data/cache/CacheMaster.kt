@@ -32,10 +32,13 @@ object CacheMaster {
         ioScope.launch {
             db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "ltw_qrscanner")
                 .build()
+            logger.info("Initializing cache")
             scans.addAll(db.scansInterface().getAll())
+            logger.info("Cache initialized")
             for (scan in scans)
                 if (scan.isFavourite)
                     favouriteScans.add(scan)
+            logger.info("Cache formed favourites list")
 
             cacheHandler.postDelayed(object : Runnable {
                 override fun run() {
@@ -43,6 +46,8 @@ object CacheMaster {
                     cacheHandler.postDelayed(this, cacheInterval)
                 }
             }, cacheInterval)
+
+            logger.info("Cache handler started")
         }
     }
 
@@ -104,9 +109,9 @@ object CacheMaster {
     }
 
     fun destroyCache() {
-        if (db.isOpen) {
-            syncCache()
-            cacheThread.quit()
+        syncCache()
+        cacheThread.quit()
+        ioScope.launch {
             logger.info("Closing access to database")
             db.close()
         }
