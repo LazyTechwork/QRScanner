@@ -16,6 +16,9 @@ interface ScanSQLInterface {
     @Update
     fun update(scan: Scan)
 
+    @Update
+    fun updateAll(vararg scans: Scan)
+
     @Transaction
     fun makeFavourite(scan: Scan) {
         scan.isFavourite = true
