@@ -9,6 +9,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.lazytechwork.qrscanner.data.cache.CacheMaster
 import ru.lazytechwork.qrscanner.fragments.FavouritesFragment
 import ru.lazytechwork.qrscanner.fragments.HistoryFragment
+import ru.lazytechwork.qrscanner.fragments.ScannerFragment
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private val historyFragment: HistoryFragment = HistoryFragment()
     private val favouritesFragment: FavouritesFragment = FavouritesFragment()
+    private val scannerFragment: ScannerFragment = ScannerFragment()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,6 +72,15 @@ class MainActivity : AppCompatActivity() {
                         .replace(
                             R.id.app_container,
                             favouritesFragment
+                        ).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .commit()
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.navitem_scanner -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(
+                            R.id.app_container,
+                            scannerFragment
                         ).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .commit()
                     return@OnNavigationItemSelectedListener true
