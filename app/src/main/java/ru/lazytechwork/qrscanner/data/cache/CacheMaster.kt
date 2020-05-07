@@ -29,6 +29,7 @@ object CacheMaster {
     fun makeFavourite(i: Int): ArrayList<Scan> {
         val scan = scans[i]
         scan.isFavourite = true
+        favouriteScans.add(scan)
         saveScan(i, scan)
         return scans
     }
@@ -36,6 +37,7 @@ object CacheMaster {
     fun removeFavourite(i: Int): ArrayList<Scan> {
         val scan = scans[i]
         scan.isFavourite = false
+        favouriteScans.remove(scan)
         saveScan(i, scan)
         return scans
     }
@@ -49,6 +51,9 @@ object CacheMaster {
 
     fun getScan(i: Int) = scans[i]
     fun getScans() = scans
+    fun getFavouriteScans() = favouriteScans
+
+    fun isDirty() = modifiedScans.size > 0 || newScans.size > 0
 
     fun saveScan(i: Int, scan: Scan): ArrayList<Scan> {
         scans[i] = scan
@@ -77,6 +82,7 @@ object CacheMaster {
     }
 
     fun destroyCache() {
-        db.close()
+        if (db.isOpen)
+            db.close()
     }
 }

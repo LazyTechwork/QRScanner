@@ -6,15 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import ru.lazytechwork.qrscanner.MainActivity
 import ru.lazytechwork.qrscanner.R
 import ru.lazytechwork.qrscanner.data.adapters.ScanItemsAdapter
+import ru.lazytechwork.qrscanner.data.cache.CacheMaster
 
 class HistoryFragment : Fragment() {
-    private val ioScope = CoroutineScope(Dispatchers.IO)
     private lateinit var recyclerView: RecyclerView
     private lateinit var scanAdapter: ScanItemsAdapter
 
@@ -25,16 +21,13 @@ class HistoryFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_history, container, false)
 
-        scanAdapter = ScanItemsAdapter((activity as MainActivity).db)
+        scanAdapter = ScanItemsAdapter(CacheMaster.getScans())
         recyclerView = view.findViewById<RecyclerView>(R.id.scanlist).apply {
             setHasFixedSize(true)
             setItemViewCacheSize(20)
             adapter = scanAdapter
         }
 
-        ioScope.launch {
-            scanAdapter.items = (activity as MainActivity).getScans()
-        }
         return view
     }
 

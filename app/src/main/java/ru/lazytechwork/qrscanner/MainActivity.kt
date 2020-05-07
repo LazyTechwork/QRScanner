@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
-import androidx.room.Room
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import ru.lazytechwork.qrscanner.data.cache.CacheMaster
 import ru.lazytechwork.qrscanner.fragments.FavouritesFragment
 import ru.lazytechwork.qrscanner.fragments.HistoryFragment
-import ru.lazytechwork.qrscanner.sql.AppDatabase
-import ru.lazytechwork.qrscanner.sql.Scan
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -21,20 +19,13 @@ class MainActivity : AppCompatActivity() {
 
     private val historyFragment: HistoryFragment = HistoryFragment()
     private val favouritesFragment: FavouritesFragment = FavouritesFragment()
-    lateinit var db: AppDatabase
-
-    suspend fun getScans(): List<Scan> =
-        db.scansInterface().getAll()
-
-    suspend fun getFavouriteScans(): List<Scan> =
-        db.scansInterface().getFavourites()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "ltw_qrscanner")
-            .build()
+
+        CacheMaster.initializeCache(applicationContext)
 
         val navbar: BottomNavigationView = findViewById(R.id.navbar)
         navbar.setOnNavigationItemSelectedListener(navbarListener)
@@ -45,8 +36,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (db.isOpen)
-            db.close()
+        CacheMaster.syncCache()
+        CacheMaster.destroyCache()
     }
 
     private val navbarListener =
