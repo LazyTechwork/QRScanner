@@ -34,14 +34,16 @@ object CacheMaster {
                 .build()
             scans.addAll(db.scansInterface().getAll())
             for (scan in scans)
-                if (scan.isFavourite) favouriteScans.add(scan)
+                if (scan.isFavourite)
+                    favouriteScans.add(scan)
+
+            cacheHandler.postDelayed(object : Runnable {
+                override fun run() {
+                    syncCache()
+                    cacheHandler.postDelayed(this, cacheInterval)
+                }
+            }, cacheInterval)
         }
-        cacheHandler.postDelayed(object : Runnable {
-            override fun run() {
-                syncCache()
-                cacheHandler.postDelayed(this, cacheInterval)
-            }
-        }, cacheInterval)
     }
 
     fun makeFavourite(i: Int): ArrayList<Scan> {
@@ -86,6 +88,7 @@ object CacheMaster {
     }
 
     fun syncCache() {
+        logger.info("Started synchronization with database")
         ioScope.launch {
             if (modifiedScans.size != 0) {
                 db.scansInterface().updateAll(*modifiedScans.toTypedArray())
@@ -96,8 +99,7 @@ object CacheMaster {
                 db.scansInterface().insertAll(*newScans.toTypedArray())
                 newScans.clear()
             }
-
-            logger.info("Successfully synchronized with database")
+            logger.info("Successfull synchronization with database")
         }
     }
 
