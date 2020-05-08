@@ -9,10 +9,11 @@ object ScanParser {
     fun parseScan(scanData: String): Scan {
         if (scanData.startsWith("BEGIN:VCARD")) {
             val vcard = Ezvcard.parse(scanData).first()
+            val name = vcard.structuredName
             return Scan(
                 Random.nextInt(),
-                vcard.formattedName.value,
-                vcard.write(),
+                "${name.given} ${name.family}",
+                "Откройте сканирование для получения всех подробностей контакта",
                 scanData,
                 Date(),
                 ScanType.CONTACT,

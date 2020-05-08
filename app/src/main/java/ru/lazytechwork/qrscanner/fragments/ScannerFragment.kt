@@ -12,6 +12,7 @@ import com.budiyev.android.codescanner.DecodeCallback
 import ru.lazytechwork.qrscanner.R
 import ru.lazytechwork.qrscanner.data.ScanParser
 import ru.lazytechwork.qrscanner.data.cache.CacheMaster
+import java.util.logging.Logger
 
 class ScannerFragment : Fragment() {
     private lateinit var codeScanner: CodeScanner
@@ -28,10 +29,11 @@ class ScannerFragment : Fragment() {
         val activity = requireActivity()
         codeScanner = CodeScanner(activity, scannerView)
         codeScanner.decodeCallback = DecodeCallback {
+            Logger.getAnonymousLogger().info(it.text)
             activity.runOnUiThread {
-                CacheMaster.newScan(ScanParser.parseScan(it.text))
                 Toast.makeText(activity, it.text, Toast.LENGTH_SHORT).show()
             }
+            CacheMaster.newScan(ScanParser.parseScan(it.text))
         }
         scannerView.setOnClickListener {
             codeScanner.startPreview()
