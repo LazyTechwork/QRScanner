@@ -10,6 +10,7 @@ import ru.lazytechwork.qrscanner.R
 import ru.lazytechwork.qrscanner.data.ScanType
 import ru.lazytechwork.qrscanner.data.cache.CacheMaster
 import ru.lazytechwork.qrscanner.sql.Scan
+import java.util.logging.Logger
 
 class ScanItemsAdapter : RecyclerView.Adapter<ScanItemsAdapter.ScanViewHolder> {
     var items: ArrayList<Scan>
@@ -81,11 +82,9 @@ class ScanItemsAdapter : RecyclerView.Adapter<ScanItemsAdapter.ScanViewHolder> {
                 }
 
                 delete_button.setOnClickListener {
-                    View.OnClickListener {
-                        CacheMaster.removeScan(scan.id)
-                        recyclerView.post {
-                            items = getFreshData()
-                        }
+                    CacheMaster.removeScan(scan.id)
+                    recyclerView.post {
+                        items = getFreshData()
                     }
                 }
             }

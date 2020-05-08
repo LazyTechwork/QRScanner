@@ -47,8 +47,8 @@ object CacheMaster {
                     cacheHandler.postDelayed(this, cacheInterval)
                 }
             }, cacheInterval)
-
             logger.info("Cache handler started")
+            logger.info(scans.joinToString("\n"))
         }
     }
 
@@ -96,7 +96,9 @@ object CacheMaster {
         if (mScan != null) mScan.apply {
             name = scan.name
             data = scan.data
+            rawData = scan.rawData
             type = scan.type
+            isFavourite = scan.isFavourite
         }
         else modifiedScans.add(scan)
         sortCache()
