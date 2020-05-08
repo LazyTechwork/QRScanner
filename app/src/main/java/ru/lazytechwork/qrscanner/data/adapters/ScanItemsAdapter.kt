@@ -1,5 +1,8 @@
 package ru.lazytechwork.qrscanner.data.adapters
 
+import android.content.Intent
+import android.net.Uri
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +13,6 @@ import ru.lazytechwork.qrscanner.R
 import ru.lazytechwork.qrscanner.data.ScanType
 import ru.lazytechwork.qrscanner.data.cache.CacheMaster
 import ru.lazytechwork.qrscanner.sql.Scan
-import java.util.logging.Logger
 
 class ScanItemsAdapter : RecyclerView.Adapter<ScanItemsAdapter.ScanViewHolder> {
     var items: ArrayList<Scan>
@@ -40,16 +42,17 @@ class ScanItemsAdapter : RecyclerView.Adapter<ScanItemsAdapter.ScanViewHolder> {
         )
     )
 
+    @ExperimentalStdlibApi
     override fun onBindViewHolder(holder: ScanViewHolder, position: Int) {
         holder.bind(position)
-
     }
 
     override fun getItemCount(): Int {
         return items.size
     }
 
-    inner class ScanViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ScanViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+        @ExperimentalStdlibApi
         fun bind(itemPosition: Int) {
             val scan = items[itemPosition]
 
@@ -85,6 +88,22 @@ class ScanItemsAdapter : RecyclerView.Adapter<ScanItemsAdapter.ScanViewHolder> {
                     CacheMaster.removeScan(scan.id)
                     recyclerView.post {
                         items = getFreshData()
+                    }
+                }
+
+                share_button.setOnClickListener {
+                    if (scan.type == ScanType.CONTACT) {
+                        view.context.applicationContext.startActivity(Intent().apply {
+                            action = Intent.ACTION_VIEW
+                            setDataAndType(
+                                Uri.parse(
+                                    "data:text/x-vcard;base64," + Base64.encodeToString(
+                                        scan.rawData.encodeToByteArray(),
+                                        Base64.DEFAULT
+                                    )
+                                ), "text/x-vcard"
+                            )
+                        })
                     }
                 }
             }
