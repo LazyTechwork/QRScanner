@@ -88,14 +88,20 @@ object CacheMaster {
             type = scan.type
         }
         else modifiedScans.add(scan)
-        scans.sortBy { -it.date.time }
+        sortCache()
         return scans
     }
 
     fun newScan(scan: Scan): ArrayList<Scan> {
         scans.add(scan)
         newScans.add(scan)
+        sortCache()
         return scans
+    }
+
+    private fun sortCache() {
+        scans.sortByDescending { it.date.time }
+        favouriteScans.sortByDescending { it.date.time }
     }
 
     fun syncCache() {
