@@ -1,11 +1,12 @@
 package ru.lazytechwork.qrscanner.data.parser
 
 import android.content.Intent
+import android.net.Uri
 import android.provider.ContactsContract
 import ezvcard.VCard
 
-object VCardIntentMaker {
-    fun createIntentFromVCard(vCard: VCard) = Intent(ContactsContract.Intents.Insert.ACTION).apply {
+object IntentMaker {
+    fun fromContact(vCard: VCard) = Intent(ContactsContract.Intents.Insert.ACTION).apply {
         type = ContactsContract.RawContacts.CONTENT_TYPE
         val name = vCard.structuredName
         val fullname = ArrayList<String>()
@@ -45,4 +46,9 @@ object VCardIntentMaker {
             putExtra(ContactsContract.Intents.Insert.JOB_TITLE, job)
         flags = Intent.FLAG_ACTIVITY_NEW_TASK
     }
+
+    fun fromLink(link: String): Intent? =
+            if (link.startsWith("https://", true) || link.startsWith("http://", true))
+                Intent(Intent.ACTION_VIEW, Uri.parse(link)).apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK }
+            else null
 }

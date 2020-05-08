@@ -10,7 +10,7 @@ import ru.lazytechwork.qrscanner.MainActivity
 import ru.lazytechwork.qrscanner.R
 import ru.lazytechwork.qrscanner.data.ScanType
 import ru.lazytechwork.qrscanner.data.cache.CacheMaster
-import ru.lazytechwork.qrscanner.data.parser.VCardIntentMaker
+import ru.lazytechwork.qrscanner.data.parser.IntentMaker
 import ru.lazytechwork.qrscanner.sql.Scan
 
 class ScanItemsAdapter : RecyclerView.Adapter<ScanItemsAdapter.ScanViewHolder> {
@@ -91,8 +91,11 @@ class ScanItemsAdapter : RecyclerView.Adapter<ScanItemsAdapter.ScanViewHolder> {
                 }
 
                 share_button.setOnClickListener {
-                    if (scan.type == ScanType.CONTACT)
-                        view.context.applicationContext.startActivity(VCardIntentMaker.createIntentFromVCard(Ezvcard.parse(scan.rawData).first()))
+                    when (scan.type) {
+                        ScanType.CONTACT -> view.context.applicationContext.startActivity(IntentMaker.fromContact(Ezvcard.parse(scan.rawData).first()))
+                        ScanType.LINK -> view.context.applicationContext.startActivity(IntentMaker.fromLink(scan.rawData))
+                        else -> return@setOnClickListener
+                    }
                 }
             }
         }

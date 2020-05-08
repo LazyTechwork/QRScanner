@@ -11,23 +11,34 @@ object ScanParser {
             val vcard = Ezvcard.parse(scanData).first()
             val name = vcard.structuredName
             return Scan(
-                Random.nextInt(),
-                "${name.given} ${name.family}",
-                "Откройте сканирование для получения всех подробностей контакта",
-                scanData,
-                Date(),
-                ScanType.CONTACT,
-                false
+                    Random.nextInt(),
+                    "${name.given} ${name.family}",
+                    "Откройте сканирование для получения всех подробностей контакта",
+                    scanData,
+                    Date(),
+                    ScanType.CONTACT,
+                    false
             )
         }
+        if (scanData.startsWith("http://", true) || scanData.startsWith("https://", true))
+            return Scan(
+                    Random.nextInt(),
+                    "Новая ссылка",
+                    scanData,
+                    scanData,
+                    Date(),
+                    ScanType.LINK,
+                    false
+            )
+
         return Scan(
-            Random.nextInt(),
-            "Новое сканирование",
-            scanData,
-            scanData,
-            Date(),
-            ScanType.TEXT,
-            false
+                Random.nextInt(),
+                "Новое сканирование",
+                scanData,
+                scanData,
+                Date(),
+                ScanType.TEXT,
+                false
         )
 
     }
