@@ -62,7 +62,7 @@ object CacheMaster {
     fun removeFavourite(i: Int): ArrayList<Scan> {
         val scan = getScan(i)
         scan.isFavourite = false
-        favouriteScans.remove(scan)
+        favouriteScans.remove(favouriteScans.find { it.id == i })
         saveScan(scan)
         return scans
     }
