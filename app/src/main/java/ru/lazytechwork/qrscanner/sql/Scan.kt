@@ -12,6 +12,7 @@ data class Scan(
     @PrimaryKey @ColumnInfo(name = "id") val id: Int,
     @ColumnInfo(name = "name") @NonNull var name: String,
     @ColumnInfo(name = "data") @NonNull var data: String,
+    @ColumnInfo(name = "rawdata") @NonNull var rawData: String,
     @ColumnInfo(name = "date") @NonNull val date: Date,
     @ColumnInfo(name = "type") @NonNull var type: ScanType,
     @ColumnInfo(name = "favourite") @NonNull var isFavourite: Boolean
