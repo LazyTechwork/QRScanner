@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.CodeScannerView
@@ -12,10 +11,10 @@ import com.budiyev.android.codescanner.DecodeCallback
 import ru.lazytechwork.qrscanner.R
 import ru.lazytechwork.qrscanner.data.ScanParser
 import ru.lazytechwork.qrscanner.data.cache.CacheMaster
-import java.util.logging.Logger
 
 class ScannerFragment : Fragment() {
     private lateinit var codeScanner: CodeScanner
+    private var previousScan: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,10 +28,8 @@ class ScannerFragment : Fragment() {
         val activity = requireActivity()
         codeScanner = CodeScanner(activity, scannerView)
         codeScanner.decodeCallback = DecodeCallback {
-            Logger.getAnonymousLogger().info(it.text)
-            activity.runOnUiThread {
-                Toast.makeText(activity, it.text, Toast.LENGTH_SHORT).show()
-            }
+            if (previousScan != null && previousScan.equals(it.text))
+                return@DecodeCallback
             CacheMaster.newScan(ScanParser.parseScan(it.text))
         }
         scannerView.setOnClickListener {
