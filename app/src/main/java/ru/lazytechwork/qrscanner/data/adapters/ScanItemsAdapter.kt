@@ -3,7 +3,6 @@ package ru.lazytechwork.qrscanner.data.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_scan.view.*
 import ru.lazytechwork.qrscanner.MainActivity
@@ -70,20 +69,25 @@ class ScanItemsAdapter : RecyclerView.Adapter<ScanItemsAdapter.ScanViewHolder> {
 
                 favourite_switch.apply {
                     isChecked = scan.isFavourite
-                    setOnCheckedChangeListener(FavouriteSwitcher(scan.id))
+                    setOnCheckedChangeListener { _, isChecked ->
+                        if (isChecked)
+                            CacheMaster.makeFavourite(scan.id)
+                        else
+                            CacheMaster.removeFavourite(scan.id)
+                        recyclerView.post {
+                            items = getFreshData()
+                        }
+                    }
                 }
-            }
-        }
-    }
 
-    inner class FavouriteSwitcher(private val i: Int) : CompoundButton.OnCheckedChangeListener {
-        override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-            if (isChecked)
-                CacheMaster.makeFavourite(i)
-            else
-                CacheMaster.removeFavourite(i)
-            recyclerView.post {
-                items = getFreshData()
+                delete_button.setOnClickListener {
+                    View.OnClickListener {
+                        CacheMaster.removeScan(scan.id)
+                        recyclerView.post {
+                            items = getFreshData()
+                        }
+                    }
+                }
             }
         }
     }

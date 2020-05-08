@@ -16,6 +16,7 @@ object CacheMaster {
     private val modifiedScans: ArrayList<Scan> = ArrayList()
     private val favouriteScans: ArrayList<Scan> = ArrayList()
     private val newScans: ArrayList<Scan> = ArrayList()
+    private val scansToRemove: ArrayList<Scan> = ArrayList()
     private val ioScope = CoroutineScope(Dispatchers.IO)
     private val cacheThread: HandlerThread = HandlerThread("Cache Master")
     private val cacheHandler: Handler
@@ -67,6 +68,18 @@ object CacheMaster {
         return scans
     }
 
+    fun removeScan(i: Int): ArrayList<Scan> {
+        val scan = getScan(i)
+        scans.remove(scan)
+        scansToRemove.add(scan)
+        var mScan: Scan? = modifiedScans.find { it.id == i }
+        if (mScan != null) modifiedScans.remove(mScan)
+        mScan = newScans.find { it.id == i }
+        if (mScan != null) newScans.remove(mScan)
+        sortCache()
+        return scans
+    }
+
     fun changeName(i: Int, name: String): ArrayList<Scan> {
         val scan = getScan(i)
         scan.name = name
@@ -77,8 +90,6 @@ object CacheMaster {
     private fun getScan(i: Int): Scan = scans.find { it.id == i }!!
     fun getScans() = scans
     fun getFavouriteScans() = favouriteScans
-
-    fun isDirty() = modifiedScans.size > 0 || newScans.size > 0
 
     private fun saveScan(scan: Scan): ArrayList<Scan> {
         val mScan: Scan? = modifiedScans.find { it.id == scan.id }
@@ -115,6 +126,11 @@ object CacheMaster {
             if (newScans.size != 0) {
                 db.scansInterface().insertAll(*newScans.toTypedArray())
                 newScans.clear()
+            }
+
+            if (scansToRemove.size != 0) {
+                db.scansInterface().deleteAll(*scansToRemove.toTypedArray())
+                scansToRemove.clear()
             }
             logger.info("Successfull synchronization with database")
         }

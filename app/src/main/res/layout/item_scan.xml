@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="5dp"
+    android:background="@color/white"
     android:paddingTop="@dimen/vertical_padding"
-    android:paddingBottom="@dimen/vertical_padding"
-    android:background="@color/white">
+    android:paddingBottom="@dimen/vertical_padding">
 
     <ImageView
         android:id="@+id/history_type"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:contentDescription="@string/history_type_icon_desc"
         android:layout_marginStart="@dimen/horizontal_padding"
+        android:contentDescription="@string/history_type_icon_desc"
         app:layout_constraintBottom_toBottomOf="@id/history_date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/history_name"
@@ -24,13 +23,13 @@
         android:id="@+id/history_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/horizontal_padding"
+        android:layout_marginEnd="@dimen/horizontal_padding"
         android:ellipsize="none"
         android:scrollHorizontally="false"
         android:text="@string/app_name"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_marginStart="@dimen/horizontal_padding"
-        android:layout_marginEnd="@dimen/horizontal_padding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/history_type"
         app:layout_constraintTop_toTopOf="parent" />
@@ -66,11 +65,50 @@
         android:id="@+id/favourite_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/vertical_padding"
         android:button="@drawable/favourite_button"
         android:textSize="12sp"
-        android:layout_marginTop="@dimen/vertical_padding"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/delete_button"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/history_date" />
+
+    <ImageButton
+        android:id="@+id/delete_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_delete_outline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/edit_button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/favourite_switch"
+        app:layout_constraintTop_toBottomOf="@+id/history_date" />
+
+    <ImageButton
+        android:id="@+id/edit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_edit_outline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/share_button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/delete_button"
+        app:layout_constraintTop_toBottomOf="@+id/history_date" />
+
+    <ImageButton
+        android:id="@+id/share_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_share_outline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/edit_button"
+        app:layout_constraintTop_toBottomOf="@+id/history_date" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

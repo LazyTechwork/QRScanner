@@ -36,4 +36,7 @@ interface ScanSQLInterface {
 
     @Delete
     fun delete(scan: Scan)
+
+    @Delete
+    fun deleteAll(vararg scans: Scan)
 }
