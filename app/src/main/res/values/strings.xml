@@ -6,6 +6,7 @@
     <string name="history_type_icon_desc">Scan type icon</string>
     <string name="check_favourite">В избранное</string>
     <string name="toast_favouriteadded">Сканирование добавлено в избранное</string>
+    <string name="toast_favouriteremoved">Сканирование удалено из избранного</string>
     <string name="delete_scan_btndesc">Delete scan</string>
     <string name="edit_scan_btndesc">Edit scan</string>
     <string name="share_scan_btndesc">Share scan</string>

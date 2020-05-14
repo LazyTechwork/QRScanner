@@ -4,7 +4,7 @@
     android:id="@+id/toast_favouriteadded_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/horizontal_padding"
+    android:layout_marginHorizontal="5dp"
     android:layout_marginBottom="60dp"
     android:background="@drawable/rounded_toast"
     android:paddingHorizontal="@dimen/horizontal_padding"
@@ -12,16 +12,16 @@
 
 
     <TextView
+        android:id="@+id/toast_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/toast_favouriteadded"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/toast_favouriteadded"
