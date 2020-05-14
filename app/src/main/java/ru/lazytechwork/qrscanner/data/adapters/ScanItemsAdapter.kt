@@ -27,10 +27,12 @@ class ScanItemsAdapter : RecyclerView.Adapter<ScanItemsAdapter.ScanViewHolder> {
     private lateinit var recyclerView: RecyclerView
     private var parent: ViewGroup? = null
     private var toastView: View? = null
+    private val mainActivity: MainActivity
 
-    constructor(freshDataFunction: () -> ArrayList<Scan>) {
+    constructor(freshDataFunction: () -> ArrayList<Scan>, activity: MainActivity) {
         this.getFreshData = freshDataFunction
         this.items = getFreshData()
+        this.mainActivity = activity
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -103,6 +105,10 @@ class ScanItemsAdapter : RecyclerView.Adapter<ScanItemsAdapter.ScanViewHolder> {
                             callToast(if (isChecked) R.string.toast_favouriteadded else R.string.toast_favouriteremoved)
                         }
                     }
+                }
+
+                edit_button.setOnClickListener {
+                    mainActivity.toggleFloatingView()
                 }
 
                 delete_button.setOnClickListener {

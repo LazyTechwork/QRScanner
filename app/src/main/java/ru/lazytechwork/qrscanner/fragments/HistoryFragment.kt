@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import ru.lazytechwork.qrscanner.MainActivity
 import ru.lazytechwork.qrscanner.R
 import ru.lazytechwork.qrscanner.data.adapters.ScanItemsAdapter
 import ru.lazytechwork.qrscanner.data.cache.CacheMaster
@@ -21,7 +22,10 @@ class HistoryFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_history, container, false)
 
-        scanAdapter = ScanItemsAdapter() { CacheMaster.getScans() }
+        scanAdapter = ScanItemsAdapter(
+            freshDataFunction = { CacheMaster.getScans() },
+            activity = activity as MainActivity
+        )
         recyclerView = view.findViewById<RecyclerView>(R.id.scanlist).apply {
             setHasFixedSize(true)
             setItemViewCacheSize(20)
