@@ -54,25 +54,22 @@ class ScanItemsAdapter : RecyclerView.Adapter<ScanItemsAdapter.ScanViewHolder> {
         this.parent?.context?.getString(resId)?.let { callToast(it) }
 
 
-    private fun callToast(customText: String) {
-        if (toastView != null && parent != null)
+    private fun callToast(customText: String) =
+        if (toastView != null && parent != null) {
             toastView!!.findViewById<TextView>(R.id.toast_text).text = customText
-        Toast(parent!!.context).apply {
-            view = toastView
-            duration = Toast.LENGTH_SHORT
-            setGravity(Gravity.FILL_HORIZONTAL or Gravity.BOTTOM, 0, 25)
-            show()
-        }
-    }
+            Toast(parent!!.context).apply {
+                view = toastView
+                duration = Toast.LENGTH_SHORT
+                setGravity(Gravity.FILL_HORIZONTAL or Gravity.BOTTOM, 0, 25)
+                show()
+            }
+        } else null
 
     @ExperimentalStdlibApi
-    override fun onBindViewHolder(holder: ScanViewHolder, position: Int) {
-        holder.bind(position)
-    }
+    override fun onBindViewHolder(holder: ScanViewHolder, position: Int) = holder.bind(position)
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    override fun getItemCount(): Int = items.size
+
 
     inner class ScanViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         @ExperimentalStdlibApi
