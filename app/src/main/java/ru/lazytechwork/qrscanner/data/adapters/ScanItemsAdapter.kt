@@ -108,7 +108,7 @@ class ScanItemsAdapter : RecyclerView.Adapter<ScanItemsAdapter.ScanViewHolder> {
                 }
 
                 edit_button.setOnClickListener {
-                    mainActivity.toggleFloatingView()
+                    mainActivity.loadFloatingFragment(mainActivity.editFragment)
                 }
 
                 delete_button.setOnClickListener {

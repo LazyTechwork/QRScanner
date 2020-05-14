@@ -12,4 +12,5 @@
     <string name="share_scan_btndesc">Share scan</string>
     <string name="scanedit_header">Редактирование сканирования</string>
     <string name="scanedit_name">Название сканирования</string>
+    <string name="scanedit_savebtn">Сохранить изменения</string>
 </resources>
