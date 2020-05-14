@@ -10,4 +10,6 @@
     <string name="delete_scan_btndesc">Delete scan</string>
     <string name="edit_scan_btndesc">Edit scan</string>
     <string name="share_scan_btndesc">Share scan</string>
+    <string name="scanedit_header">Редактирование сканирования</string>
+    <string name="scanedit_name">Название сканирования</string>
 </resources>

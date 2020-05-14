@@ -45,26 +45,12 @@ class MainActivity : AppCompatActivity() {
         BottomNavigationView.OnNavigationItemSelectedListener { menuItem: MenuItem ->
             when (menuItem.itemId) {
                 R.id.navitem_history -> {
-//                    val random = Random()
-//                    val types = ScanType.values()
-//                    ioScope.launch {
-//                        db.scansInterface().insertAll(
-//                            Scan(
-//                                random.nextInt(),
-//                                "123",
-//                                "123",
-//                                Date(),
-//                                types[random.nextInt(types.size)],
-//                                false
-//                            )
-//                        )
                     supportFragmentManager.beginTransaction()
                         .replace(
                             R.id.app_container,
                             historyFragment
                         ).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .commit()
-//                    }
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navitem_favourites -> {

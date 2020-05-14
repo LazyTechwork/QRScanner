@@ -3,7 +3,8 @@
     <color name="sky_300">#71AAEB</color>
     <color name="azure_300">#3F8AE0</color>
     <color name="black">#000000</color>
-    <color name="white_alpha12">#0000000C</color>
+    <color name="white_alpha12">#1F000000</color>
+    <color name="black_alpha75">#BF000000</color>
     <color name="white">#FFFFFF</color>
     <color name="yellow_light">#FFD54F</color>
     <color name="gray_40">#F2F3F5</color>
