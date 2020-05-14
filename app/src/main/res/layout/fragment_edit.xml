@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/rounded_toast"
     android:paddingHorizontal="@dimen/horizontal_padding"
-    android:paddingVertical="50dp">
+    android:paddingVertical="25dp">
 
     <TextView
         android:id="@+id/textView2"
